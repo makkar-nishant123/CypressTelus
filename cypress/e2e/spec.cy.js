@@ -27,9 +27,12 @@ describe('template spec', () => {
      
   })
 
-  //Make sure you have more than 6 results.
+ //Make sure you have more than 6 results and have hyprelink
   cy.xpath(".//*[contains(@class, \"styles__ListItem-sc\")]/a").its('length').should('be.gte', 6)
-
+  cy.xpath(".//*[contains(@class, \"styles__ListItem-sc\")]/a").each($item => {
+    cy.wrap($item).invoke('attr', 'href').should('not.be.empty')
+  })
+    
   //Generate a random number and click random search result.
   let x =  Math.floor(Math.random() * 10)
   cy.xpath("(.//*[contains(@class, \"styles__ListItem-sc\")]/a)[" + x + "]").click()
